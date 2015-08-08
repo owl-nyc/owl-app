@@ -1,36 +1,26 @@
 package com.battlehacknyc.owl;
 
-import android.app.AlertDialog;
-import android.content.ContentResolver;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.LocationManager;
-import android.provider.Settings;
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-
+import android.widget.Toast;
 
 public class NightOwlActivity extends ActionBarActivity {
+
+    Button btnShowLocation;
+
+    // GPSTracker class
     GPSTracker gps;
-
-
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_night_owl);
-    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_night_owl, menu);
+        getMenuInflater().inflate(R.menu.menu_watch, menu);
         return true;
     }
 
@@ -49,47 +39,42 @@ public class NightOwlActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private Boolean displayGpsStatus() {
-        ContentResolver contentResolver = getBaseContext()
-                .getContentResolver();
-        boolean gpsStatus = Settings.Secure
-                .isLocationProviderEnabled(contentResolver,
-                        LocationManager.GPS_PROVIDER);
-        if (gpsStatus) {
-            return true;
 
-        } else {
-            return false;
-        }
-    }
 
-    protected void alertbox() {
-        Button button = (Button) findViewById(R.id.button);
-        button.setText("SEND");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your device's GPS is disabled")
-                .setCancelable(false)
-                .setTitle("GPS STATUS")
-                .setPositiveButton("Turn it on",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // finish the current activity
-                                // AlertBoxAdvance.this.finish();
-                                Intent myIntent = new Intent(
-                                        Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(myIntent);
-                                dialog.cancel();
-                            }
-                        })
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // cancel the dialog box
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_night_owl);
+
+        btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
+
+        // show location button click event
+        btnShowLocation.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // create class object
+                gps = new GPSTracker(NightOwlActivity.this);
+
+                // check if GPS enabled
+                if(gps.canGetLocation()){
+
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+
+                    // \n is for new line
+                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                }else{
+                    // can't get location
+                    // GPS or Network is not enabled
+                    // Ask user to enable GPS/network in settings
+                    gps.showSettingsAlert();
+                }
+
+            }
+        });
     }
 
 }
+
