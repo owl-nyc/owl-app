@@ -1,39 +1,24 @@
 package com.battlehacknyc.owl;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
-public class MainActivity extends ActionBarActivity {
-
-
-    /* Method to trigger the Night Owl activity. */
-    public void startNightOwlActivity(View view) {
-        Intent intent = new Intent(this, NightOwlActivity.class);
-        startActivity(intent);
-    }
-
-    /* Method to trigger the Designated activity */
-    public void startWatchActivity(View view) {
-        Intent intent = new Intent(this, WatchActivity.class);
-        startActivity(intent);
-    }
+public class WatchActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_watch);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_watch, menu);
         return true;
     }
 
