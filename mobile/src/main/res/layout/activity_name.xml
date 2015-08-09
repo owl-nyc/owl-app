@@ -17,8 +17,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/app_bar"
         android:textColor="#ffffff"
-        android:background="#986d5f"
-        android:textSize="14.5dp" />
+        android:background="#986d5f" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +28,7 @@
         android:textColor="#ffffff"
         android:textSize="20dp"
         android:textIsSelectable="true"
-        android:layout_above="@+id/activity_name_name"
+        android:layout_below="@+id/name_activity_textview"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -38,8 +37,9 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        android:layout_marginBottom="30dp"
         android:textColor="#ffffff"
-        android:backgroundTint="#ffffff"
+        android:backgroundTint="#363636"
         android:layout_above="@+id/activity_name_continue"
         android:layout_centerHorizontal="true" />
 
@@ -51,8 +51,12 @@
         android:text="Continue"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="25dp"
         android:width="200dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/activity_name_name" />
+        android:layout_alignStart="@+id/activity_name_name"
+        android:layout_alignEnd="@+id/activity_name_name"
+        android:background="#363636"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

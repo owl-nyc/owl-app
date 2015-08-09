@@ -7,123 +7,25 @@
     tools:context="com.battlehacknyc.owl.WatchActivity"
     android:id="@+id/WatchRelativeLayout">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:onClick="updateData"
-        android:id="@+id/activity_watch_update"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        tools:layout="@android:layout/simple_gallery_item"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/activity_watch_name" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="No Owl Yet."
         android:id="@+id/activity_watch_name"
-        android:text="No Owl Yet"
+        android:textSize="40dp"
+        android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Latitude: "
-        android:id="@+id/textView2"
-        android:layout_alignTop="@+id/activity_watch_latitude"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Longitude"
-        android:id="@+id/textView3"
-        android:layout_marginBottom="62dp"
-        android:layout_above="@+id/textView4"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Original Latitude"
-        android:id="@+id/textView4"
-        android:layout_marginBottom="63dp"
-        android:layout_above="@+id/textView5"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Original Longitude"
-        android:id="@+id/textView5"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="n/a"
-        android:id="@+id/activity_watch_latitude"
-        android:layout_above="@+id/activity_watch_longitude"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="n/a"
-        android:id="@+id/activity_watch_longitude"
-        android:layout_alignTop="@+id/textView3"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="n/a"
-        android:layout_alignTop="@+id/textView4"
-        android:layout_alignStart="@+id/activity_watch_longitude"
-        android:id="@+id/activity_watch_orig_lat" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="n/a"
-        android:id="@+id/activity_watch_orig_lon"
-        android:layout_alignTop="@+id/textView5"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last Updated"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView5"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="n/a"
-        android:id="@+id/activity_watch_last"
-        android:layout_alignTop="@+id/textView6"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alerts"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/textView6"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="43dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No alerts yet."
-        android:id="@+id/activity_watch_alerts"
-        android:layout_below="@+id/textView7"
-        android:layout_alignEnd="@+id/activity_watch_name"
-        android:layout_alignParentStart="true" />
 </RelativeLayout>

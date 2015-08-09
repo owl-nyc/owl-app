@@ -1,23 +1,46 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".MainActivity">
+    android:layout_height="match_parent" tools:context=".MainActivity"
+    android:background="#242628">
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/toolbar"
-        android:layout_alignParentStart="true" />
+        layout="@layout/toolbar" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView2"
+        android:src="@drawable/city"
+        android:background="#986d5f"
+        android:layout_below="@+id/app_bar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Who are you tonight?"
+        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:id="@+id/textView2"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textIsSelectable="true"
+        android:layout_marginTop="166dp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button"
-        android:text="NightOwl"
+        android:text="Owl"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="111dp"
-        android:onClick="startNightOwlActivity" />
+        android:onClick="startNightOwlActivity"
+        android:background="#363636"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView2" />
 
     <Button
         android:text="Watch"
@@ -25,15 +48,8 @@
         android:onClick="startWatchActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#363636"
+        android:textColor="#FFFFFF"
         android:layout_alignTop="@+id/button"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="41dp" />
-
-    <TextView
-        android:id="@+id/activity_main_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignEnd="@+id/textView2" />
 </RelativeLayout>

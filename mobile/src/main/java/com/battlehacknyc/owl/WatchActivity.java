@@ -16,12 +16,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.support.v4.app.FragmentActivity;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,6 +36,9 @@ import org.json.JSONObject;
 
 public class WatchActivity extends ActionBarActivity {
     private static int ANIMATION_TIME_OUT = 1000;
+    private GoogleMap mMap;
+    private Marker owlMarker;
+
     String username;
 
     private int mInterval = 5000; // 5 seconds by default, can be changed later
@@ -58,8 +68,52 @@ public class WatchActivity extends ActionBarActivity {
 
         mHandler = new Handler();
 
+        setUpMapIfNeeded();
+
         startRepeatingTask();
     }
+
+
+    /**
+     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
+     * installed) and the map has not already been instantiated.. This will ensure that we only ever
+     * call {@link #setUpMap()} once when {@link #mMap} is not null.
+     * <p/>
+     * If it isn't installed {@link SupportMapFragment} (and
+     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
+     * install/update the Google Play services APK on their device.
+     * <p/>
+     * A user can return to this FragmentActivity after following the prompt and correctly
+     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
+     * have been completely destroyed during this process (it is likely that it would only be
+     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
+     * method in {@link #onResume()} to guarantee that it will be called.
+     */
+    private void setUpMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+            // Check if we were successful in obtaining the map.
+            if (mMap != null) {
+                setUpMap();
+            }
+        }
+    }
+
+    /**
+     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
+     * just add a marker near Africa.
+     * <p/>
+     * This should only be called once and when we are sure that {@link #mMap} is not null.
+     */
+    private void setUpMap() {
+        MarkerOptions mo = new MarkerOptions()
+                .position(new LatLng(40.753137, -73.989369)).title("Marker");
+        owlMarker = mMap.addMarker(mo);
+    }
+
 
     Runnable mStatusChecker = new Runnable() {
         @Override
@@ -88,6 +142,12 @@ public class WatchActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopRepeatingTask();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         stopRepeatingTask();
     }
 
@@ -140,8 +200,10 @@ public class WatchActivity extends ActionBarActivity {
                             for (int i=0; i<alertMessages.length; i++) {
                                 alertMessages[i] = alerts.getString(i);
                             }
+                            TextView activity_watch_name = (TextView) findViewById(R.id.activity_watch_name);
+                            activity_watch_name.setText(owlName);
 
-
+                                /*
                             TextView activity_watch_alerts = (TextView) findViewById(R.id.activity_watch_alerts),
                                     activity_watch_name = (TextView) findViewById(R.id.activity_watch_name),
                                     activity_watch_last = (TextView) findViewById(R.id.activity_watch_last),
@@ -156,6 +218,17 @@ public class WatchActivity extends ActionBarActivity {
                             activity_watch_longitude.setText(Double.toString(longitude));
                             activity_watch_orig_lat.setText(Double.toString(last_lat));
                             activity_watch_orig_lon.setText(Double.toString(last_long));
+                            */
+
+                            /*
+                            mMap.clear();
+                            MarkerOptions mo = new MarkerOptions()
+                                    .position(new LatLng(latitude, longitude)).title("Marker");
+                            owlMarker = mMap.addMarker(mo);
+                            */
+
+                            System.out.println(owlMarker.getPosition());
+
 
                             String alert = "";
                             for (int i = 0; i<alertMessages.length; i++) {
@@ -169,13 +242,15 @@ public class WatchActivity extends ActionBarActivity {
                                     alert += owlName + " hasn't responded in more than 3 minutes.\n";
                                 } else if (alertMessages[i].equals("12_hour_lost")) {
                                     alert += owlName + " hasn't responded in more than 12 hours.\n";
+                                } else if (alertMessages[i].equals("is_drunk")) {
+                                    alert += owlName + " is most likely drunk. Keep an eye out.";
                                 }
                             }
 
                             if (alert.equals("")) {
-                                activity_watch_alerts.setText("No alerts at this time.");
+                                //activity_watch_alerts.setText("No alerts at this time.");
                             } else {
-                                activity_watch_alerts.setText(alert);
+                                //activity_watch_alerts.setText(alert);
                                 vibrate();
                                 //Define Notification Manager
                                 NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);

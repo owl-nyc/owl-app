@@ -36,9 +36,6 @@ public class MainActivity extends ActionBarActivity {
 
         String welcome = username + ", are you a Watch or an Owl tonight?";
 
-        // Show the welcome message
-        TextView welcomeMessage = (TextView) findViewById(R.id.activity_main_welcome);
-        welcomeMessage.setText(welcome);
     }
 
 
