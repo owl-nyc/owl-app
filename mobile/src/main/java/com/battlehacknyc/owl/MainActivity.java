@@ -10,17 +10,19 @@ import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
-    public static String username;
+    String username;
 
     /* Method to trigger the Night Owl activity. */
     public void startNightOwlActivity(View view) {
         Intent intent = new Intent(this, NightOwlActivity.class);
+        intent.putExtra(NameActivity.USERNAME, username);
         startActivity(intent);
     }
 
     /* Method to trigger the Designated activity */
     public void startWatchActivity(View view) {
         Intent intent = new Intent(this, WatchActivity.class);
+        intent.putExtra(NameActivity.USERNAME, username);
         startActivity(intent);
     }
 

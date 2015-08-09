@@ -26,4 +26,22 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="183dp" />
 
+    <Button
+        android:id="@+id/activity_night_owl_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startRemoveWatch"
+        android:text="Remove Watch"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/GPSDataTextView" />
+
+    <Button
+        android:id="@+id/activity_night_owl_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startAddWatch"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:text="Add Watch" />
+
 </RelativeLayout>

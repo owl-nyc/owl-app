@@ -9,63 +9,27 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+
 
 public class WatchActivity extends ActionBarActivity {
     private static int ANIMATION_TIME_OUT = 1000;
-    public static String NightOwl = null;
+    String username;
+
+    RequestQueue queue;
+
+    // Tag used to log messages
+    private static final String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch);
 
-
-        /* Grab elements from XML */
-        TextView heading = (TextView) findViewById(R.id.activity_watch_heading);
-
-
-        /* Grab username from intent if possible */
         Intent intent = getIntent();
-        NightOwl = intent.getStringExtra(WatchSelectOwlActivity.USERNAME_TO_WATCH);
+        username = intent.getStringExtra(NameActivity.USERNAME);
 
-
-        if (NightOwl == null) {
-            /* Run this if there isn't a session running */
-
-            heading.setText("You currently aren't watching an Owl.");
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Redirecting to Choose an Owl",
-                    Toast.LENGTH_SHORT)
-                    .show();
-
-            new Handler().postDelayed(new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
-
-                @Override
-                public void run() {
-                    // This method will be executed once the timer is over
-                    // Start your app main activity
-                    Intent i = new Intent(WatchActivity.this, WatchSelectOwlActivity.class);
-                    startActivity(i);
-
-                    // close this activity
-                    finish();
-                }
-            }, ANIMATION_TIME_OUT);
-        } else {
-            /* There is currently a session running. */
-
-            heading.setText(NightOwl);
-
-
-
-
-        }
     }
 
 

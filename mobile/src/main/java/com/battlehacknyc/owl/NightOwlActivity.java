@@ -1,8 +1,10 @@
 package com.battlehacknyc.owl;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,19 +16,25 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 public class NightOwlActivity extends ActionBarActivity {
+    String username;
 
     Button btnShowLocation;
 
     // GPSTracker class
     GPSTracker gps;
 
+    RequestQueue queue;
 
-    //URL to get JSON Array
-    private static String url = "http://agnok.com/";
-
-    //JSON Node Names
-
+    // Tag used to log messages
+    private static final String TAG = MainActivity.class.getSimpleName();
 
 
 
@@ -35,6 +43,7 @@ public class NightOwlActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_watch, menu);
         return true;
+
     }
 
     @Override
@@ -60,36 +69,66 @@ public class NightOwlActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_night_owl);
 
-        btnShowLocation = (Button) findViewById(R.id.btnShowLocation);
+        gps = new GPSTracker(NightOwlActivity.this);
 
-        // show location button click event
-        btnShowLocation.setOnClickListener(new View.OnClickListener() {
+        Intent i = getIntent();
+        username = i.getStringExtra(NameActivity.USERNAME);
 
-            @Override
-            public void onClick(View arg0) {
-                // create class object
-                gps = new GPSTracker(NightOwlActivity.this);
-
-                // check if GPS enabled
-                if(gps.canGetLocation()){
-
-                    double latitude = gps.getLatitude();
-                    double longitude = gps.getLongitude();
-
-                    // \n is for new line
-                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+    }
 
 
+    /* Method to send GPS coordinates to the server. */
+    public void sendGPS() {
+        // create class object
 
-                }else{
-                    // can't get location
-                    // GPS or Network is not enabled
-                    // Ask user to enable GPS/network in settings
-                    gps.showSettingsAlert();
-                }
+        // check if GPS enabled
+        if(gps.canGetLocation()){
 
-            }
-        });
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+
+
+            // Setup Volley networking request
+            queue = Volley.newRequestQueue(this); // Need to set up a queue that holds all Volley requests
+            String url = "http://agnok.com/set_state?name="+username+"&lat="+latitude+"&lon"+longitude;
+
+            StringRequest request = new StringRequest(Request.Method.GET, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Watch added successfully.",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d(TAG, error.toString(), error);
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Watch not added.",
+                                    Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
+
+            // Add the request to the Volley request queue
+            queue.add(request);
+
+
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
+
     }
 
 }
