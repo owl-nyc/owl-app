@@ -8,6 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.app.Activity;
+import android.widget.TextView;
 
 public class NightOwlActivity extends ActionBarActivity {
 
@@ -15,6 +20,14 @@ public class NightOwlActivity extends ActionBarActivity {
 
     // GPSTracker class
     GPSTracker gps;
+
+
+    //URL to get JSON Array
+    private static String url = "http://agnok.com/";
+
+    //JSON Node Names
+
+
 
 
     @Override
@@ -65,6 +78,9 @@ public class NightOwlActivity extends ActionBarActivity {
 
                     // \n is for new line
                     Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+
+
+
                 }else{
                     // can't get location
                     // GPS or Network is not enabled

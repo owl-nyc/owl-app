@@ -27,6 +27,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Name, Info, and Login Page -->
+        <activity
+            android:name=".NameActivity"
+            android:label="@string/title_activity_name" >
+        </activity>
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"

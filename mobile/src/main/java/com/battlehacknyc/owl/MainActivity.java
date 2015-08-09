@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    public static String username;
 
     /* Method to trigger the Night Owl activity. */
     public void startNightOwlActivity(View view) {
@@ -27,6 +28,15 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra(NameActivity.USERNAME);
+
+        String welcome = username + ", are you a Watch or an Owl tonight?";
+
+        // Show the welcome message
+        TextView welcomeMessage = (TextView) findViewById(R.id.activity_main_welcome);
+        welcomeMessage.setText(welcome);
     }
 
 

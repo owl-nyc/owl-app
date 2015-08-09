@@ -10,5 +10,6 @@
 
     <string name="title_activity_night_owl">NightOwlActivity</string>
     <string name="title_activity_watch">WatchActivity</string>
+    <string name="title_activity_name">NameActivity</string>
 
 </resources>

@@ -26,4 +26,11 @@
         android:layout_alignTop="@+id/button"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="37dp" />
+
+    <TextView
+        android:id="@+id/activity_main_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
