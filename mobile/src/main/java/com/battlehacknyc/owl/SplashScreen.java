@@ -2,8 +2,10 @@ package com.battlehacknyc.owl;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 public class SplashScreen extends Activity {
 
@@ -14,6 +16,10 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        TextView tx = (TextView)findViewById(R.id.splash);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Light.otf");
+        tx.setTypeface(custom_font);
 
         new Handler().postDelayed(new Runnable() {
 
