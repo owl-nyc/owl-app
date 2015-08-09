@@ -3,15 +3,30 @@ package com.battlehacknyc.owl;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 
 public class WatchSelectOwlActivity extends ActionBarActivity {
     public final static String USERNAME_TO_WATCH = "com.battlehacknyc.owl.username_to_watch";
+
+    
+    RequestQueue queue;
+    // Tag used to log messages
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +85,28 @@ public class WatchSelectOwlActivity extends ActionBarActivity {
     public boolean usernameExists(String username) {
         /* Ask the server if the username exists */
         boolean exists = true;
+
+        // Setup Volley networking request
+        queue = Volley.newRequestQueue(this); // Need to set up a queue that holds all Volley requests
+        String url = "http://www.reddit.com/r/pics.json"; // The url we are getting data from
+
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d(TAG, error.toString(), error);
+                    }
+                });
+
+        // Add the request to the Volley request queue
+        queue.add(request);
+
         if (exists) {
             String confirmed;
             /* Ask the server to ask the Owl for confirmation. */
