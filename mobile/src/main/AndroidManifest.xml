@@ -46,6 +46,10 @@
             android:name=".WatchActivity"
             android:label="@string/title_activity_watch" >
         </activity>
+        <activity
+            android:name=".WatchSelectOwlActivity"
+            android:label="@string/title_activity_watch_select_owl" >
+        </activity>
     </application>
 
 </manifest>

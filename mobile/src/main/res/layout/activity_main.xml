@@ -18,7 +18,7 @@
         android:onClick="startNightOwlActivity" />
 
     <Button
-        android:text="Designated"
+        android:text="Owl"
         android:id="@+id/button2"
         android:onClick="startWatchActivity"
         android:layout_width="wrap_content"

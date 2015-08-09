@@ -4,10 +4,15 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.battlehacknyc.owl.WatchActivity">
+    tools:context="com.battlehacknyc.owl.WatchActivity" >
 
-    <TextView android:text="Watch Activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    <TextView
+        android:id="@+id/activity_watch_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="58dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
