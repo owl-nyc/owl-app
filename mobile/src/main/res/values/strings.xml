@@ -14,5 +14,16 @@
     <string name="title_activity_watch_select_owl">WatchSelectOwlActivity</string>
     <string name="title_activity_add_watch">AddWatchActivity</string>
     <string name="title_activity_remove_watch">RemoveWatchActivity</string>
+    <string name="description">
+    "\n
+    Owl is an app that analyzes your gait with sensors in order to detect intoxication.
+    If it senses that you're drunk, it'll alert a designated friend and stream your GPS location to him/her.
+    \n
+    We achieve this by using pedometer sensors that many fitness apps use to capture footstep data. Then,
+    we  map out those footsteps over time and capture how long it takes to make each footstep.
+    \n
+    If the readings are consistent or gradually changing, then you are sober. If it's erratic, you're intoxicated.
+    \n"
+</string>
 
 </resources>

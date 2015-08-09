@@ -101,7 +101,7 @@ public class NightOwlActivity extends ActionBarActivity {
                         public void onResponse(String response) {
                             Toast.makeText(
                                     getApplicationContext(),
-                                    "Watch added successfully.",
+                                    "Coordinates updated.",
                                     Toast.LENGTH_SHORT)
                                     .show();
                         }
