@@ -119,10 +119,11 @@
         android:layout_marginTop="43dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="No alerts yet."
         android:id="@+id/activity_watch_alerts"
         android:layout_below="@+id/textView7"
-        android:layout_alignEnd="@+id/textView6" />
+        android:layout_alignEnd="@+id/activity_watch_name"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

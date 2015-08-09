@@ -1,7 +1,12 @@
 package com.battlehacknyc.owl;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +31,9 @@ public class WatchActivity extends ActionBarActivity {
     private static int ANIMATION_TIME_OUT = 1000;
     String username;
 
+    private int mInterval = 5000; // 5 seconds by default, can be changed later
+    private Handler mHandler;
+
     /* Owl data */
     private static String owlName;
     private static double latitude, longitude;
@@ -47,6 +55,26 @@ public class WatchActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(NameActivity.USERNAME);
+
+        mHandler = new Handler();
+
+        startRepeatingTask();
+    }
+
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {
+            updateData();
+            mHandler.postDelayed(mStatusChecker, mInterval);
+        }
+    };
+
+    void startRepeatingTask() {
+        mStatusChecker.run();
+    }
+
+    void stopRepeatingTask() {
+        mHandler.removeCallbacks(mStatusChecker);
     }
 
 
@@ -55,6 +83,12 @@ public class WatchActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_watch, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopRepeatingTask();
     }
 
     @Override
@@ -72,7 +106,7 @@ public class WatchActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void updateData(View view)  {
+    public void updateData()  {
 
         // Setup Volley networking request
         queue = Volley.newRequestQueue(this); // Need to set up a queue that holds all Volley requests
@@ -99,25 +133,14 @@ public class WatchActivity extends ActionBarActivity {
                             last_long = data.getDouble("orig_lon");
                             last_updated = data.getLong("last_updated");
 
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println(owlName);
+
 
                             JSONArray alerts = data.getJSONArray("alerts");
                             alertMessages = new String[alerts.length()];
                             for (int i=0; i<alertMessages.length; i++) {
                                 alertMessages[i] = alerts.getString(i);
                             }
+
 
                             TextView activity_watch_alerts = (TextView) findViewById(R.id.activity_watch_alerts),
                                     activity_watch_name = (TextView) findViewById(R.id.activity_watch_name),
@@ -134,19 +157,42 @@ public class WatchActivity extends ActionBarActivity {
                             activity_watch_orig_lat.setText(Double.toString(last_lat));
                             activity_watch_orig_lon.setText(Double.toString(last_long));
 
+                            String alert = "";
                             for (int i = 0; i<alertMessages.length; i++) {
-                                if (alertMessages[i] == "battery") {
-                                    activity_watch_alerts.append(owlName + " appears to be low on battery.\n");
-                                } else if (alertMessages[i] == "out_of_bounds") {
-                                    activity_watch_alerts.append(owlName + " is out of the safe or known area!");
-                                } else if (alertMessages[i] == "speeding") {
-                                    activity_watch_alerts.append(owlName + " is moving at an incredible speed, and may be drunk driving.");
-                                } else if (alertMessages[i] == "lost_track") {
-                                    activity_watch_alerts.append(owlName + " hasn't responded in more than 3 minutes.");
-                                } else if (alertMessages[i] == "12_hour_lost") {
-                                    activity_watch_alerts.append(owlName + " hasn't responded in more than 12 hours.");
+                                if (alertMessages[i].equals("battery")) {
+                                    alert += owlName + "'s battery appears to be extremely low; take note!.\n";
+                                } else if (alertMessages[i].equals("out_of_bounds")) {
+                                    alert += owlName + " is out of the safe or known area!\n";
+                                } else if (alertMessages[i].equals("speeding")) {
+                                    alert += owlName + " is moving at an incredible speed, and may be drunk driving.\n";
+                                } else if (alertMessages[i].equals("lost_track")) {
+                                    alert += owlName + " hasn't responded in more than 3 minutes.\n";
+                                } else if (alertMessages[i].equals("12_hour_lost")) {
+                                    alert += owlName + " hasn't responded in more than 12 hours.\n";
                                 }
                             }
+
+                            if (alert.equals("")) {
+                                activity_watch_alerts.setText("No alerts at this time.");
+                            } else {
+                                activity_watch_alerts.setText(alert);
+                                vibrate();
+                                //Define Notification Manager
+                                NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+//Define sound URI
+                                Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                                        .setSmallIcon(R.drawable.newlogo)
+                                        .setContentTitle("ALERT: "+owlName+ " has an emergency")
+                                        .setContentText("ALERTALERTALERTALERTALERT\n"+alert)
+                                        .setSound(soundUri); //This sets the sound to play
+
+//Display notification
+                                notificationManager.notify(0, mBuilder.build());
+                            }
+
 
                         } catch (Exception e) {
                             System.out.println();
@@ -179,7 +225,7 @@ public class WatchActivity extends ActionBarActivity {
         queue.add(request);
     }
 
-    public void vibrate(View view) {
+    public void vibrate() {
         Intent intentVibrate =new Intent(getApplicationContext(),VibrateService.class);
         startService(intentVibrate);
     }
