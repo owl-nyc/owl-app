@@ -58,6 +58,15 @@
         android:layout_below="@+id/textView3"
         android:layout_alignStart="@+id/textView3" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Donate?"
+        android:onClick="donateLink"
+        android:id="@+id/button3"
+        android:layout_below="@+id/app_bar"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>
 
     <!--

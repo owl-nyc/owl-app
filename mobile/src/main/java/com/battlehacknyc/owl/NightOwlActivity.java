@@ -1,31 +1,32 @@
 package com.battlehacknyc.owl;
 
+import android.content.Intent;
 import android.widget.Toast;
 
 
-        import android.app.Activity;
-        import android.content.Context;
-        import android.hardware.Sensor;
-        import android.hardware.SensorEvent;
-        import android.hardware.SensorEventListener;
-        import android.hardware.SensorManager;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
-        import com.android.volley.Request;
-        import com.android.volley.RequestQueue;
-        import com.android.volley.Response;
-        import com.android.volley.VolleyError;
-        import com.android.volley.toolbox.StringRequest;
-        import com.android.volley.toolbox.Volley;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-        import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class NightOwlActivity extends Activity implements SensorEventListener {
@@ -58,7 +59,7 @@ public class NightOwlActivity extends Activity implements SensorEventListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_night_owl);
 //        statusView = (TextView) findViewById(R.id.status);
         readingsView = (TextView) findViewById(R.id.readings);
         conditionView = (TextView) findViewById(R.id.condition);
@@ -230,5 +231,9 @@ public class NightOwlActivity extends Activity implements SensorEventListener {
         } else {
             toggleButton.setText("Start");
         }
+    }
+
+    public void donateLink(View view) {
+        Intent intent = new Intent("http://agnok.com/pay", );
     }
 }
